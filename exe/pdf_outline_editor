@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+
+require "pdf_outline_editor"
