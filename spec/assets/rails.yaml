@@ -1,0 +1,20 @@
+- title: 1 Guide Assumptions
+  page: 2
+- title: 2 What is Rails?
+  page: 3
+- title: 3 Creating a New Rails Project
+  page: 3
+  children:
+  - title: 3.1 Installing Rails
+    page: 3
+  - title: 3.2 Creating the Blog Application
+    page: 4
+- title: 4 Hello, Rails!
+  page: 6
+  children:
+  - title: 4.1 Starting up the Web Server
+    page: 6
+  - title: 4.2 Say "Hello", Rails
+    page: 8
+  - title: 4.3 Setting the Application Home Page
+    page: 9
