@@ -21,6 +21,10 @@ RSpec.describe PdfOutlineEditor::Dumper do
       it "returns outlines" do
         expect(dumper.dump).to eq(result)
       end
+
+      after do
+        dumper.close
+      end
     end
 
     context "with a pdf file which doesn't have outlines" do
@@ -28,6 +32,10 @@ RSpec.describe PdfOutlineEditor::Dumper do
 
       it "returns nil" do
         expect(dumper.dump).to be_nil
+      end
+
+      after do
+        dumper.close
       end
     end
   end
