@@ -4,27 +4,38 @@ module PdfOutlineEditor
 
     JavaFile = java.io.File
 
+    def self.open(input_pdf_path)
+      dumper = new(input_pdf_path)
+
+      begin
+        yield dumper
+      ensure
+        dumper.close
+      end
+    end
+
+    attr_reader :closed
+
     def initialize(input_pdf_path)
-      @input_pdf_path = input_pdf_path
+      @doc = PDDocument.load(JavaFile.new(input_pdf_path))
+      @pages = @doc.pages
+      @closed = false
     end
 
     def dump
-      begin
-        @doc = PDDocument.load(JavaFile.new(@input_pdf_path))
+      root_outline = @doc.document_catalog.document_outline
 
-        @pages = @doc.pages
+      if root_outline
+        traverse(root_outline)
+      else
+        nil
+      end
+    end
 
-        root_outline = @doc.document_catalog.document_outline
-
-        if root_outline
-          traverse(root_outline)
-        else
-          nil
-        end
-      rescue => error
-        raise Error, error.message
-      ensure
-        @doc.close if @doc
+    def close
+      unless @closed
+        @doc.close
+        @closed = true
       end
     end
 

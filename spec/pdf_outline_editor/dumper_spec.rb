@@ -21,4 +21,18 @@ RSpec.describe PdfOutlineEditor::Dumper do
       end
     end
   end
+
+  describe ".open" do
+    let(:input_pdf_path) { path_for_asset('rails-with-toc.pdf') }
+
+    before do
+      PdfOutlineEditor::Dumper.open(input_pdf_path) do |dumper|
+        @dumper = dumper
+      end
+    end
+
+    it "closes dumper after yielding it" do
+      expect(@dumper.closed).to eq(true)
+    end
+  end
 end
