@@ -2,8 +2,19 @@ require 'json'
 require 'tempfile'
 
 RSpec.describe PdfOutlineEditor::Loader do
+  let(:loader) { PdfOutlineEditor::Loader.new(input_pdf_path) }
+
+  describe "#initialize" do
+    context "with non-existent input pdf path" do
+      let(:input_pdf_path) { path_for_asset('not-found.pdf') }
+
+      it "raises an error" do
+        expect { loader }.to raise_error(PdfOutlineEditor::Error)
+      end
+    end
+  end
+
   describe "#load" do
-    let(:loader) { PdfOutlineEditor::Loader.new(input_pdf_path) }
     let(:input_pdf_path) { path_for_asset('rails-without-toc.pdf') }
     let(:entries) { JSON.parse(File.read(path_for_asset('rails.json'))) }
     let(:output_file) { Tempfile.open(['', '.pdf']) }

@@ -20,8 +20,14 @@ module PdfOutlineEditor
     attr_reader :closed
 
     def initialize(input_pdf_path)
-      @doc = PDDocument.load(JavaFile.new(input_pdf_path))
+      begin
+        @doc = PDDocument.load(JavaFile.new(input_pdf_path))
+      rescue
+        raise Error, $!.message
+      end
+
       @pages = @doc.pages.to_a
+
       @closed = false
     end
 
