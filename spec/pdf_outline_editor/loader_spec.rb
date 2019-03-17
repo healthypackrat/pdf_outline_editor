@@ -18,7 +18,7 @@ RSpec.describe PdfOutlineEditor::Loader do
     let(:input_pdf_path) { path_for_asset('rails-without-toc.pdf') }
     let(:entries) { JSON.parse(File.read(path_for_asset('rails.json'))) }
     let(:output_file) { Tempfile.open(['', '.pdf']) }
-    let(:dumped) { PdfOutlineEditor::Dumper.new(output_file.path).dump }
+    let(:dumper) { PdfOutlineEditor::Dumper.new(output_file.path) }
 
     before do
       loader.load(entries)
@@ -26,11 +26,12 @@ RSpec.describe PdfOutlineEditor::Loader do
     end
 
     it "loads outlines" do
-      expect(dumped).to eq(entries)
+      expect(dumper.dump).to eq(entries)
     end
 
     after do
       output_file.close
+      dumper.close
       loader.close
     end
   end
