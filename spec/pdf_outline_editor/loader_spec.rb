@@ -15,24 +15,39 @@ RSpec.describe PdfOutlineEditor::Loader do
   end
 
   describe "#load" do
-    let(:input_pdf_path) { path_for_asset('rails-without-toc.pdf') }
-    let(:entries) { JSON.parse(File.read(path_for_asset('rails.json'))) }
-    let(:output_file) { Tempfile.open(['', '.pdf']) }
-    let(:dumper) { PdfOutlineEditor::Dumper.new(output_file.path) }
+    context "with valid data" do
+      let(:input_pdf_path) { path_for_asset('rails-without-toc.pdf') }
+      let(:entries) { JSON.parse(File.read(path_for_asset('rails.json'))) }
+      let(:output_file) { Tempfile.open(['', '.pdf']) }
+      let(:dumper) { PdfOutlineEditor::Dumper.new(output_file.path) }
 
-    before do
-      loader.load(entries)
-      loader.save(output_file.path)
+      before do
+        loader.load(entries)
+        loader.save(output_file.path)
+      end
+
+      it "loads outlines" do
+        expect(dumper.dump).to eq(entries)
+      end
+
+      after do
+        output_file.close
+        dumper.close
+        loader.close
+      end
     end
 
-    it "loads outlines" do
-      expect(dumper.dump).to eq(entries)
-    end
+    context "with too large page number" do
+      let(:input_pdf_path) { path_for_asset('rails-without-toc.pdf') }
+      let(:entries) { [{ 'title' => 'Some Title', 'page' => 45 }] }
 
-    after do
-      output_file.close
-      dumper.close
-      loader.close
+      it "raises an error" do
+        expect { loader.load(entries) }.to raise_error(PdfOutlineEditor::Error)
+      end
+
+      after do
+        loader.close
+      end
     end
   end
 

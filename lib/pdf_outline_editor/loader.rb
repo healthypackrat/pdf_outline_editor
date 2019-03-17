@@ -55,7 +55,15 @@ module PdfOutlineEditor
     private
 
     def set_outline(parent_outline, entry)
-      page = @pages[entry.fetch('page') - 1]
+      page_number = entry.fetch('page')
+
+      max_page_number = @pages.size
+
+      unless (1..max_page_number).include?(page_number)
+        raise Error, "page number must be between 1 and #{max_page_number}: got #{page_number}"
+      end
+
+      page = @pages[page_number - 1]
 
       dest = PDPageXYZDestination.new
       dest.page = page
