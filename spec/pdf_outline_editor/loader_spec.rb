@@ -1,0 +1,40 @@
+require 'json'
+require 'tempfile'
+
+RSpec.describe PdfOutlineEditor::Loader do
+  describe "#load" do
+    let(:loader) { PdfOutlineEditor::Loader.new(input_pdf_path) }
+    let(:input_pdf_path) { path_for_asset('rails-without-toc.pdf') }
+    let(:entries) { JSON.parse(File.read(path_for_asset('rails.json'))) }
+    let(:output_file) { Tempfile.open(['', '.pdf']) }
+    let(:dumped) { PdfOutlineEditor::Dumper.new(output_file.path).dump }
+
+    before do
+      loader.load(entries)
+      loader.save(output_file.path)
+    end
+
+    it "loads outlines" do
+      expect(dumped).to eq(entries)
+    end
+
+    after do
+      output_file.close
+      loader.close
+    end
+  end
+
+  describe ".open" do
+    let(:input_pdf_path) { path_for_asset('rails-without-toc.pdf') }
+
+    before do
+      PdfOutlineEditor::Loader.open(input_pdf_path) do |loader|
+        @loader = loader
+      end
+    end
+
+    it "closes loader after yielding it" do
+      expect(@loader.closed).to eq(true)
+    end
+  end
+end
