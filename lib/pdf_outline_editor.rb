@@ -9,6 +9,7 @@ require 'pdf_outline_editor/loader'
 
 require 'pdf_outline_editor/runner'
 require 'pdf_outline_editor/commands/dump_command'
+require 'pdf_outline_editor/commands/load_command'
 
 module PdfOutlineEditor
   class Error < StandardError; end
