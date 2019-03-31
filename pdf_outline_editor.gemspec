@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["healthypackrat"]
   spec.email         = ["healthypackrat@gmail.com"]
 
-  spec.summary       = "Set PDF outlines from a JSON or YAML config file"
+  spec.summary       = "Set PDF outlines from a JSON/YAML definition file"
   spec.homepage      = "https://github.com/healthypackrat/pdf_outline_editor"
   spec.license       = "Apache-2.0"
 
