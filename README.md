@@ -26,7 +26,7 @@ or, by running `dump` command:
 $ pdf_outline_editor dump -f json input.pdf > toc.json
 ```
 
-(Edit outlines...)
+(Edit toc.json as you like.)
 
 Then run `load` command to set outlines:
 
