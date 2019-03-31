@@ -22,13 +22,13 @@ First, generate outlines definition file by running `init` command:
 $ pdf_outline_editor init -f json > toc.json
 ```
 
-or, by running `dump` command:
+or, by running `dump` command with an existing pdf file:
 
 ```
 $ pdf_outline_editor dump -f json input.pdf > toc.json
 ```
 
-(Edit toc.json as you like.)
+(Edit `toc.json` as you like...)
 
 Then run `load` command to set outlines:
 
