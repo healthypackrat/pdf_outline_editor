@@ -1,5 +1,7 @@
 # `pdf_outline_editor`
 
+[![Build Status](https://travis-ci.org/healthypackrat/pdf_outline_editor.svg?branch=master)](https://travis-ci.org/healthypackrat/pdf_outline_editor)
+
 This gem provides a command to get/set PDF outlines from a JSON/YAML definition file.
 
 ## Requirements
