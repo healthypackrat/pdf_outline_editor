@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'optparse'
 
 module PdfOutlineEditor
@@ -29,20 +31,24 @@ module PdfOutlineEditor
 
         @parser = OptionParser.new
 
-        @parser.banner = "Usage: #{File.basename($0)} load <input-pdf-path> <input-outlines-path> <output-pdf-path>"
+        @parser.banner = "Usage: #{File.basename($PROGRAM_NAME)} load <input-pdf-path> <input-outlines-path> <output-pdf-path>"
 
         @parser
       end
 
       def handle_args(argv)
         @input_pdf_path = argv.shift
+
         raise Error, 'missing input pdf path' unless @input_pdf_path
 
         input_outlines_path = argv.shift
+
         raise Error, 'missing input outlines path' unless input_outlines_path
+
         @outlines = parse_outlines(input_outlines_path)
 
         @output_pdf_path = argv.shift
+
         raise Error, 'missing output pdf path' unless @output_pdf_path
       end
 
@@ -51,11 +57,9 @@ module PdfOutlineEditor
 
         method_name = "parse_#{ext}_outlines"
 
-        if respond_to?(method_name, true)
-          send(method_name, path)
-        else
-          raise Error, "unknown extension: #{ext}"
-        end
+        raise Error, "unknown extension: #{ext}" unless respond_to?(method_name, true)
+
+        send(method_name, path)
       end
 
       def parse_json_outlines(path)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module PdfOutlineEditor
   class Loader
     java_import org.apache.pdfbox.pdmodel.PDDocument
@@ -6,6 +8,7 @@ module PdfOutlineEditor
     java_import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem
 
     JavaFile = java.io.File
+    IOException = java.io.IOException
 
     def self.open(input_pdf_path)
       loader = new(input_pdf_path)
@@ -22,8 +25,8 @@ module PdfOutlineEditor
     def initialize(input_pdf_path)
       begin
         @doc = PDDocument.load(JavaFile.new(input_pdf_path))
-      rescue
-        raise Error, $!.message
+      rescue IOException => e
+        raise Error, e.message
       end
 
       @pages = @doc.pages.to_a
@@ -32,7 +35,7 @@ module PdfOutlineEditor
     end
 
     def load(entries)
-      root_outline =  PDDocumentOutline.new
+      root_outline = PDDocumentOutline.new
 
       @doc.document_catalog.document_outline = root_outline
 
@@ -46,10 +49,10 @@ module PdfOutlineEditor
     end
 
     def close
-      unless @closed
-        @doc.close
-        @closed = true
-      end
+      return if @closed
+
+      @doc.close
+      @closed = true
     end
 
     private
@@ -59,9 +62,7 @@ module PdfOutlineEditor
 
       max_page_number = @pages.size
 
-      unless (1..max_page_number).include?(page_number)
-        raise Error, "page number must be between 1 and #{max_page_number}: got #{page_number}"
-      end
+      raise Error, "page number must be between 1 and #{max_page_number}: got #{page_number}" unless (1..max_page_number).include?(page_number)
 
       page = @pages[page_number - 1]
 

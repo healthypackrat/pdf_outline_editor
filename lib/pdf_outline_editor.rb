@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'java'
 
 require_relative '../vendor/pdfbox/pdfbox-app-2.0.13.jar'

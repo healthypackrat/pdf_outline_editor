@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'optparse'
 
 module PdfOutlineEditor
@@ -8,7 +10,7 @@ module PdfOutlineEditor
       def initialize(argv)
         @parser = nil
 
-        @output_formats = [:json, :yaml]
+        @output_formats = %i[json yaml]
         @output_format = :json
 
         @input_pdf_path = nil
@@ -22,9 +24,7 @@ module PdfOutlineEditor
         Dumper.open(@input_pdf_path) do |dumper|
           outlines = dumper.dump
 
-          if outlines
-            puts send("convert_to_#{@output_format}", outlines)
-          end
+          puts send("convert_to_#{@output_format}", outlines) if outlines
         end
       end
 
@@ -35,7 +35,7 @@ module PdfOutlineEditor
 
         @parser = OptionParser.new
 
-        @parser.banner = "Usage: #{File.basename($0)} dump [options] <input-pdf-path>"
+        @parser.banner = "Usage: #{File.basename($PROGRAM_NAME)} dump [options] <input-pdf-path>"
 
         desc = "Output format (default: #{@output_format}; one of #{@output_formats.join(', ')})"
         @parser.on('-f', '--format=FORMAT', @output_formats, desc) do |value|

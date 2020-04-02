@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 module PdfOutlineEditor
   class Dumper
     java_import org.apache.pdfbox.pdmodel.PDDocument
 
     JavaFile = java.io.File
+    IOException = java.io.IOException
 
     def self.open(input_pdf_path)
       dumper = new(input_pdf_path)
@@ -19,8 +22,8 @@ module PdfOutlineEditor
     def initialize(input_pdf_path)
       begin
         @doc = PDDocument.load(JavaFile.new(input_pdf_path))
-      rescue
-        raise Error, $!.message
+      rescue IOException => e
+        raise Error, e.message
       end
 
       @pages = @doc.pages
@@ -31,18 +34,16 @@ module PdfOutlineEditor
     def dump
       root_outline = @doc.document_catalog.document_outline
 
-      if root_outline
-        traverse(root_outline)
-      else
-        nil
-      end
+      return unless root_outline
+
+      traverse(root_outline)
     end
 
     def close
-      unless @closed
-        @doc.close
-        @closed = true
-      end
+      return if @closed
+
+      @doc.close
+      @closed = true
     end
 
     private

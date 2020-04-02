@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 require 'optparse'
 
 module PdfOutlineEditor
   class Runner
     class << self
-      _known_commands = {}
+      known_commands = {}
 
       define_method :known_commands do
-        _known_commands
+        known_commands
       end
 
       define_method :register_command do |key, klass|
-        _known_commands[key] = klass
+        known_commands[key] = klass
       end
     end
 
@@ -23,20 +25,16 @@ module PdfOutlineEditor
     end
 
     def run
-      if @argv.empty?
-        raise Error, "missing a command: available commands are #{Runner.known_commands.keys.sort.join(', ')}"
-      end
+      raise Error, "missing a command: available commands are #{Runner.known_commands.keys.sort.join(', ')}" if @argv.empty?
 
       command_name = @argv.shift
 
       command_class = Runner.known_commands[command_name.to_sym]
 
-      if command_class
-        command = command_class.new(@argv)
-        command.run
-      else
-        raise Error, "unknown command: #{command_name}"
-      end
+      raise Error, "unknown command: #{command_name}" unless command_class
+
+      command = command_class.new(@argv)
+      command.run
     end
 
     private
@@ -46,7 +44,7 @@ module PdfOutlineEditor
 
       @parser = OptionParser.new
 
-      @parser.banner = "Usage: #{File.basename($0)} <command> <args>"
+      @parser.banner = "Usage: #{File.basename($PROGRAM_NAME)} <command> <args>"
 
       @parser.version = VERSION
 
