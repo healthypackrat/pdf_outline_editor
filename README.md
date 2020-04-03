@@ -1,4 +1,4 @@
-# `pdf_outline_editor`
+# pdf\_outline\_editor
 
 [![Build Status](https://travis-ci.org/healthypackrat/pdf_outline_editor.svg?branch=master)](https://travis-ci.org/healthypackrat/pdf_outline_editor)
 
@@ -38,7 +38,11 @@ $ pdf_outline_editor load input.pdf toc.json output.pdf
 
 ## Development
 
-Run `bin/jruby-ng-server` in a new terminal window for faster loading.
+Run `bin/jruby-ng-server` in background for faster loading.
+
+```
+$ bin/jruby-ng-server &
+```
 
 Then run `bin/rspec` to run the specs.
 
