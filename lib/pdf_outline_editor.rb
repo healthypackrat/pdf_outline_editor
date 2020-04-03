@@ -2,7 +2,7 @@
 
 require 'java'
 
-require_relative '../vendor/pdfbox/pdfbox-app-2.0.13.jar'
+require_relative '../vendor/pdfbox/pdfbox-app-2.0.19.jar'
 
 require 'pdf_outline_editor/version'
 
