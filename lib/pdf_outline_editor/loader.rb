@@ -29,6 +29,8 @@ module PdfOutlineEditor
         raise Error, e.message
       end
 
+      @doc.set_all_security_to_be_removed(true)
+
       @pages = @doc.pages.to_a
 
       @closed = false
