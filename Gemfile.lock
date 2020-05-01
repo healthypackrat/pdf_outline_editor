@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pdf_outline_editor (0.1.1-java)
+    pdf_outline_editor (0.1.2-java)
 
 GEM
   remote: https://rubygems.org/
