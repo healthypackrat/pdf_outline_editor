@@ -4,6 +4,8 @@
 
 This gem provides a command to get/set PDF outlines from a JSON/YAML definition file.
 
+Useful for [PDF files which don't have outlines](https://github.com/healthypackrat/pdf-outlines).
+
 ## Requirements
 
 - JRuby
@@ -16,7 +18,7 @@ $ jgem install pdf_outline_editor
 
 ## Usage
 
-First, generate outlines definition file by running `init` command:
+First, generate an outlines definition file by running `init` command:
 
 ```
 $ pdf_outline_editor init -f json > toc.json
