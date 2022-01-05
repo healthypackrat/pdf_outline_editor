@@ -44,6 +44,7 @@ GEM
 
 PLATFORMS
   java
+  universal-java-16
   universal-java-17
 
 DEPENDENCIES
