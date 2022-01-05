@@ -64,7 +64,9 @@ module PdfOutlineEditor
 
       max_page_number = @pages.size
 
-      raise Error, "page number must be between 1 and #{max_page_number}: got #{page_number}" unless (1..max_page_number).include?(page_number)
+      unless (1..max_page_number).include?(page_number)
+        raise Error, "page number must be between 1 and #{max_page_number}: got #{page_number}"
+      end
 
       page = @pages[page_number - 1]
 

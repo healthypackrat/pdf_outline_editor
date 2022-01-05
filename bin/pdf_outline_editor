@@ -1,3 +1,3 @@
 #!/bin/sh
 
-jruby --ng -Ilib exe/pdf_outline_editor "$@"
+jruby -Ilib exe/pdf_outline_editor "$@"

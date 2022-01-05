@@ -1,10 +1,10 @@
 AllCops:
-  TargetRubyVersion: 2.5
+  NewCops: enable
 
-Layout/LineLength:
+Gemspec/RequiredRubyVersion:
   Enabled: false
 
-Layout/SpaceInsideBlockBraces:
+Layout/LineLength:
   Enabled: false
 
 Metrics/AbcSize:
@@ -19,17 +19,5 @@ Metrics/MethodLength:
 Style/Documentation:
   Enabled: false
 
-Style/HashEachMethods:
-  Enabled: true
-
-Style/HashTransformKeys:
-  Enabled: true
-
-Style/HashTransformValues:
-  Enabled: true
-
-Lint/RaiseException:
-  Enabled: true
-
-Lint/StructNewOverride:
-  Enabled: true
+Style/IfUnlessModifier:
+  Enabled: false
